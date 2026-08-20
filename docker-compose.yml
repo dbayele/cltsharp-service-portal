@@ -1,0 +1,66 @@
+services:
+  service-requests-db:
+    image: postgres:16
+    container_name: cltsharp-service-requests-postgres
+    environment:
+      POSTGRES_DB: cltsharp_service_requests
+      POSTGRES_USER: cltsharp_app
+      POSTGRES_PASSWORD: change-me
+    ports: ["5432:5432"]
+    volumes: [cltsharp_service_requests_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cltsharp_app -d cltsharp_service_requests"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  police-db:
+    image: postgres:16
+    container_name: cltsharp-police-postgres
+    environment:
+      POSTGRES_DB: cltsharp_police
+      POSTGRES_USER: cltsharp_police_app
+      POSTGRES_PASSWORD: change-me-police
+    ports: ["5433:5432"]
+    volumes: [cltsharp_police_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cltsharp_police_app -d cltsharp_police"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  fire-db:
+    image: postgres:16
+    container_name: cltsharp-fire-postgres
+    environment:
+      POSTGRES_DB: cltsharp_fire
+      POSTGRES_USER: cltsharp_fire_app
+      POSTGRES_PASSWORD: change-me-fire
+    ports: ["5434:5432"]
+    volumes: [cltsharp_fire_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cltsharp_fire_app -d cltsharp_fire"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  airport-db:
+    image: postgres:16
+    container_name: cltsharp-airport-postgres
+    environment:
+      POSTGRES_DB: cltsharp_airport
+      POSTGRES_USER: cltsharp_airport_app
+      POSTGRES_PASSWORD: change-me-airport
+    ports: ["5435:5432"]
+    volumes: [cltsharp_airport_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cltsharp_airport_app -d cltsharp_airport"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  cltsharp_service_requests_data:
+  cltsharp_police_data:
+  cltsharp_fire_data:
+  cltsharp_airport_data:
